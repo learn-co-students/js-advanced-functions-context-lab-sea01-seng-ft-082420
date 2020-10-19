@@ -1,4 +1,67 @@
 /* Your Code Here */
+function createEmployeeRecord(a) {
+    return {
+        'firstName': a[0],
+        'familyName': a[1],
+        'title': a[2],
+        'payPerHour': a[3],
+        'timeInEvents': [],
+        'timeOutEvents': []
+    }
+}
+
+function createEmployeeRecords(aOfA){
+    let newArray = []
+    aOfA.map( a => {
+        newArray.push(createEmployeeRecord(a))
+    })
+    return newArray
+}
+
+function createTimeInEvent(date) {
+    date = date.split(' ')
+    this.timeInEvents.push ({
+        'type': 'TimeIn',
+        'hour': parseInt(date[1]),
+        'date': date[0]
+    })
+    return this
+}
+
+function createTimeOutEvent(date) {
+    date = date.split(' ')
+    this.timeOutEvents.push ({
+        'type': 'TimeOut',
+        'hour': parseInt(date[1]),
+        'date': date[0]
+    })
+    return this
+}
+
+function hoursWorkedOnDate(date) {
+    let timeIn = this.timeInEvents.find(e => e.date == date).hour
+    let timeOut = this.timeOutEvents.find(e => e.date == date).hour
+    return (timeOut - timeIn) / 100
+}
+
+function wagesEarnedOnDate(date) {
+    return hoursWorkedOnDate.call(this, date) * this.payPerHour
+}
+
+function findEmployeeByFirstName(array, name) {
+    return array.find(e => e.firstName == name)
+}
+
+function calculatePayroll(array) {
+    let payRoll = 0
+    array.forEach(person => {
+        person.timeInEvents.forEach(e => {
+            payRoll += wagesEarnedOnDate.call(person, e.date)
+        })
+    })
+    return payRoll
+}
+
 
 /*
  We're giving you this function. Take a look at it, you might see some usage
